@@ -1,5 +1,7 @@
 # https://code.google.com/codejam/contest/6364486/dashboard#s=p0
 import sys
+import queue
+
 def solve(S,N,D,O):
     i, j, total, odd, result = 0, 0, 0, 0, -sys.maxsize
     while i < N and j < N:
@@ -13,6 +15,35 @@ def solve(S,N,D,O):
             total -= S[i]
             i += 1
     return result if result > -sys.maxsize else 'IMPOSSIBLE'
+
+def solve_q(S,N,D,O):
+    q = queue.Queue()
+    odd,curr_result,final_result = 0, 0, -sys.maxsize
+
+    for candy in S:
+
+        # NEED TO DEQUEUE THE BEGINNING OF THE FIRST, IF IT IS AN EMPTY ONE AND THERE IS MORE AFTER
+
+        if (candy % 2 + odd <= O and candy + curr_result <= D):
+            q.put(candy)
+            odd += candy % 2
+            curr_result += candy
+            final_result = max(final_result, curr_result)
+
+        else:
+            while not q.empty() and (not candy % 2 + odd <= O and candy + curr_result <= D ):
+                out_candy = q.get()
+                odd -= out_candy%2
+                curr_result -= out_candy
+
+
+            if (candy % 2 + odd <= O and candy + curr_result <= D):
+                q.put(candy)
+                odd += candy % 2
+                curr_result += candy
+                final_result = max(final_result, curr_result)
+
+    return final_result if final_result > -sys.maxsize else 'IMPOSSIBLE'
 
     
 def compute_S(X1,X2,N,A,B,C,L,M):
@@ -38,7 +69,7 @@ def main():
         N,O,D = firstline[0],firstline[1],firstline[2]
         X1,X2,A,B,C,M,L = secondline[0],secondline[1],secondline[2],secondline[3],secondline[4],secondline[5],secondline[6]
         S = compute_S( X1=X1,X2=X2,A=A,B=B,C=C,M=M,L=L,N=N )
-        results.append("Case #{}: {}\n".format(str(i + 1), solve(S,N,D,O)))
+        results.append("Case #{}: {}\n".format(str(i + 1), solve_q(S,N,D,O)))
     with open('out.out', 'w') as w:
         [w.write(r) for r in results]
     return
