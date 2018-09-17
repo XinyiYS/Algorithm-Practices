@@ -1,6 +1,7 @@
 # https://code.google.com/codejam/contest/6364486/dashboard#s=p0
 import sys
 import queue
+import os
 
 def solve(S,N,D,O):
     i, j, total, odd, result = 0, 0, 0, 0, -sys.maxsize
@@ -13,6 +14,14 @@ def solve(S,N,D,O):
             odd += S[j] % 2
             result = max(total, result)
             j += 1
+
+            # NOT COMPLETED
+            # TO IMPLEMENT THE TAKING OUT OF THE LEADING NEGATIVES CORRECTLY
+            while i < j-1 and S[i]<=0:
+                total -= S[i]
+                odd -= S[i]% 2
+                i += 1
+                result = max(result,total)
         # cannot take the candy
         else:
             # if both pointers overlap
@@ -56,17 +65,17 @@ def solve_q(S,N,D,O):
 
 def compute_S(X1,X2,N,A,B,C,L,M):
     X = [0]* N
-    X[0],X[1] = X1,X2
+    X[0],X[1] = X1, X2
     S = [0]* N
     S[0],S[1] = X1+L, X2+L
     for i in range(2,N):
-        X[i] = ((A % M * X[i - 1] % M)%M + (B % M * X[i-2]%M)%M + C%M)%M
+        X[i] = ((A % M * X[i - 1] % M)% M + (B % M * X[i-2]%M)%M + C%M)%M
         S[i] = X[i]+L
     return S
 
 def main():
     # with open('in.in', 'r') as r:
-    with open('small.in', 'r') as r:
+    with open('large.in', 'r') as r:
         n = int(r.readline())
         firstlines, secondlines = [], []
         for i in range(n):
@@ -82,6 +91,7 @@ def main():
         results.append("Case #{}: {}\n".format(str(i + 1), solve(S, N, D, O)))
     with open('out.out', 'w') as w:
         [w.write(r) for r in results]
+        print(os.system("diff out1.out out.out"))
     return
 
 main()
