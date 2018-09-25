@@ -9,12 +9,25 @@ class Solution(object):
             if len(str) == 0:
                 return False
             i = 0
+            left_trimmed = ''
+            while i < len(str) and str[i]==' ':
+                i+=1
+            left_trimmed = str[i:]
+            if len(left_trimmed) ==0:
+                return False
+            str = left_trimmed
             while i < len(str) and not str[i].isdigit() and not str[i] == '-':
                 if not str[i] == ' ':
                     return False
                 i += 1
+            print(str)
             begin = i
-            negsign = True
+            print(begin)
+
+            if  str[begin] != '-':
+                negsign =False
+            else:
+                negsign = True
             while i < len(str) and (str[i].isdigit() or negsign * str[i] == '-'):
                 if str[i] == '-':
                     negsign = False
@@ -54,7 +67,6 @@ class Solution(object):
             return
 
         number_str = isvalid(str)
-        print(number_str)
         if not number_str:
             return 0
         result = checkRange(number_str)
@@ -62,6 +74,6 @@ class Solution(object):
 
 
 s = Solution()
-inputs = ['0-1','42','-42', '4193 with words','words and 123','-91283472332','2147483648+1']
+inputs = ['42','-42', '4193 with words','words and 123','-91283472332','2147483648+1']
 for input in inputs:
     print(s.myAtoi(input))
