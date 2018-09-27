@@ -26,18 +26,15 @@ class Solution(object):
                     another = next_fruit
                     curr += 1
                     type = 1
-                    first_different = j
                     j += 1
                 else:
                     res = max(res , curr)
-                    i = first_different
+                    i = j - 1
                     break
-
-
 
         return res
 
 s = Solution()
-a = [1,2,3,2,2]
-# a= [3,3,3,1,2,1,1,2,3,3,4]
+# a = [1,2,3,2,2]
+a= [3,3,3,1,2,1,1,2,3,3,4]
 print(s.totalFruit(a))
