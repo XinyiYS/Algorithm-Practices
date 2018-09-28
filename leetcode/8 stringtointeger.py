@@ -4,6 +4,20 @@ class Solution(object):
         :type str: str
         :rtype: int
         """
+        def get_trimmed(str):
+
+            negsign = True
+
+            for i,c in enumerate(str):
+                if c ==' ' or c.isdigit() or negsign * c=='-':
+                    if c.isdigit() or c=='-':
+                        negsign = False
+
+
+
+            return
+
+
 
         def isvalid(str):
             if len(str) == 0:
@@ -74,6 +88,6 @@ class Solution(object):
 
 
 s = Solution()
-inputs = ['42','-42', '4193 with words','words and 123','-91283472332','2147483648+1']
+inputs = ['42','-42', '4193 with words','words and 123','-91283472332','21474836489']
 for input in inputs:
     print(s.myAtoi(input))
