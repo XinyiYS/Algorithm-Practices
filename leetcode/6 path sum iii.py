@@ -6,7 +6,7 @@
 #         self.left = None
 #         self.right = None
 
-class Solution:
+class Solution(object):
     def pathSum(self, root, sum):
         """
         :type root: TreeNode
@@ -14,20 +14,22 @@ class Solution:
         :rtype: int
         """
 
-        def solve(node, sum, partial_sum):
-            if node is None:
-                return 0
-
-            recurse_result = solve(node.left, sum, sum) + solve(node.right, sum, sum)
-
-            if node.val == sum:
-                return recurse_result + 1
-
-            if node.val == partial_sum:
-                return recurse_result + 1
+        def dfs(root, prevSum, sum):
+            if not root:
+                return
+            currSum = prevSum + root.val
+            if currSum - sum in rec:
+                self.count += rec[currSum - sum]
+            if currSum in rec:
+                rec[currSum] += 1
             else:
-                return solve(node.left, sum, partial_sum - node.val) + solve(node.right, sum,
-                                                                             partial_sum - node.val) + recurse_result
+                rec[currSum] = 1
+            dfs(root.left, currSum, sum)
+            dfs(root.right, currSum, sum)
+            rec[currSum] -= 1
 
-        return solve(root, sum, sum)
+        self.count = 0
+        rec = {0: 1}
+        dfs(root, 0, sum)
+        return self.count
 
