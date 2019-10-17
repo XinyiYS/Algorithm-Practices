@@ -1,3 +1,4 @@
+
 def binarySearch(arr, target, low=None, high=None):
 	l = low if low else 0 
 	h = high if high else len(arr) - 1
