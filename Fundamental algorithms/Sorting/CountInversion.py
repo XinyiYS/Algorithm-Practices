@@ -60,7 +60,7 @@ def merge(arr, temp_arr, left, mid, right):
         else: 
             # Inversion will occur. 
             temp_arr[k] = arr[j] 
-            inv_count += (mid-i + 1) 
+            inv_count += (mid - i + 1) 
             k += 1
             j += 1
   
