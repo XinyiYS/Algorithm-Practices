@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, start,end,sum,left,right):
+    def __init__(self, start, end, sum, left, right):
         self.start = start
         self.end = end 
         self.sum = sum
@@ -9,18 +9,18 @@ class Node:
 class SegmentTree:
     def __init__(self, nums):
         if not nums:return 
-        self.root = self.buildTree(0,len(nums)-1,nums)
+        self.root = self.buildTree(0,len(nums)-1, nums)
     
-    def buildTree(self,start,end,nums):
+    def buildTree(self, start, end, nums):
         if start==end:
-            return Node(start,end,nums[start],None,None)
+            return Node(start, end, nums[start], None, None)
         
         mid = (start+end)//2
-        left = self.buildTree(start,mid,nums)
-        right = self.buildTree(mid+1,end,nums)
-        return Node(start,end,left.sum+right.sum, left,right)
+        left = self.buildTree(start, mid, nums)
+        right = self.buildTree(mid+1, end, nums)
+        return Node(start, end,left.sum+right.sum, left, right)
     
-    def update(self,node,index,value):        
+    def update(self, node, index, value):        
         if index == node.start == node.end:
             node.sum = value
             return
@@ -40,11 +40,11 @@ class SegmentTree:
         
         mid = (root.start+root.end)//2
         if j <= mid:
-            return self.sumRange(root.left,i,j)
+            return self.sumRange(root.left, i, j)
         elif i > mid:
-            return self.sumRange(root.right,i,j)
+            return self.sumRange(root.right, i, j)
         else:
-            return self.sumRange(root.left, i , mid) + self.sumRange(root.right,mid+1,j)
+            return self.sumRange(root.left, i, mid) + self.sumRange(root.right, mid+1, j)
         
 class NumArray:
 
@@ -57,7 +57,7 @@ class NumArray:
 
 
     def sumRange(self, i: int, j: int) -> int:
-        return self.ST.sumRange(self.ST.root,i,j)
+        return self.ST.sumRange(self.ST.root, i, j)
         
 
 
